@@ -55,4 +55,4 @@ pipeline {
             }
         }
     }
-}  just i can go with this now for my netflix-gpy
+}  

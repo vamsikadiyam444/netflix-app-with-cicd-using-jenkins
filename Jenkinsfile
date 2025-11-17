@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:20' // Node.js image with npm included
-            args '-u root:root' // optional, run as root to avoid permissions issues
-        }
-    }
+    agent any
 
     environment {
         IMAGE_NAME = "vamsikrishna212/myapp"
@@ -12,15 +7,15 @@ pipeline {
     }
 
     stages {
-        stage('Install') {
+        stage('Install & Build') {
             steps {
-                sh 'npm install'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh 'npm run build'
+                script {
+                    // Run Node commands inside node:18 container
+                    docker.image('node:18').inside {
+                        sh 'npm install'
+                        sh 'npm run build'
+                    }
+                }
             }
         }
 

@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18' // Node.js image with npm included
+            args '-u root:root' // optional, run as root to avoid permissions issues
+        }
+    }
 
     environment {
         IMAGE_NAME = "vamsikrishna212/myapp"
@@ -7,7 +12,6 @@ pipeline {
     }
 
     stages {
-
         stage('Install') {
             steps {
                 sh 'npm install'
@@ -55,4 +59,4 @@ pipeline {
             }
         }
     }
-}  
+}

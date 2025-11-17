@@ -9,13 +9,8 @@ pipeline {
     stages {
         stage('Install & Build') {
             steps {
-                script {
-                    // Run Node commands inside node:18 container
-                    docker.image('node:18').inside {
-                        sh 'npm install'
-                        sh 'npm run build'
-                    }
-                }
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
 

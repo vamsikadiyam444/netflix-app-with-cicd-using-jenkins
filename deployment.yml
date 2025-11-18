@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: netflix
-        image: vamsikrishna212/netflix:tag
+        image: vamsikrishna212/netflix:BUILD_NUMBER
         ports:
         - containerPort: 80

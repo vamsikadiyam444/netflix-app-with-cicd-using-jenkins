@@ -22,10 +22,8 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'dockerhub-username', variable: 'DOCKER_USER'),
-                    string(credentialsId: 'dockerhub-password', variable: 'DOCKER_PASS')
-                ]) {
+                // Use Docker Hub credentials stored in Jenkins
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh """
                         echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
                         docker push ${IMAGE_NAME}:${TAG}
@@ -46,6 +44,13 @@ pipeline {
             steps {
                 sh 'kubectl apply -f deployment.yml'
                 sh 'kubectl apply -f service.yml'
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                sh 'kubectl get pods'
+                sh 'kubectl rollout status deployment/myapp'
             }
         }
     }

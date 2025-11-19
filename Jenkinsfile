@@ -50,7 +50,7 @@ pipeline {
         stage('Verify Deployment') {
             steps {
                 sh 'kubectl get pods'
-                sh 'kubectl rollout status deployment/myapp'
+                sh 'kubectl rollout status deployment/netflix-deployment'
             }
         }
     }
